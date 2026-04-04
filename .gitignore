@@ -1,0 +1,34 @@
+# Mac
+.DS_Store
+
+# Gradle
+.gradle/
+build/
+
+# Local config
+local.properties
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+
+# NDK
+.externalNativeBuild/
+.cxx/
+
+# Captures
+captures/
+
+# Logs
+*.log
+
+# Keystore
+*.jks
+*.keystore
+
+# Generated files
+/app/build/
+/app/release/
+/app/debug/
+
+.kotlin/

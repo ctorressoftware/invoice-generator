@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">invoice-generator</string>
+    <string name="personal_invoice_generator">Personal Invoice Generator</string>
+    <string name="generate">Generate</string>
+</resources>
