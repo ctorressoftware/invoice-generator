@@ -1,7 +1,9 @@
 package com.ctorres.invoice;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -204,6 +207,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             document.writeTo(new FileOutputStream(file));
+            sharePdf(file);
             Toast.makeText(this, "PDF generado: " + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             Log.println(Log.ERROR, "Error", Objects.requireNonNull(e.getMessage()));
@@ -211,5 +215,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         document.close();
+    }
+
+    private void sharePdf(File file) {
+        Uri uri = FileProvider.getUriForFile(
+                this,
+                getPackageName() + ".provider",
+                file
+        );
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("application/pdf");
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        startActivity(Intent.createChooser(intent, "Compartir factura"));
     }
 }
