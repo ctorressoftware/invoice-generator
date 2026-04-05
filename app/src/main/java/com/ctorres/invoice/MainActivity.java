@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-
         invoiceDateInput = findViewById(R.id.invoiceDateInput);
         invoiceNumberInput = findViewById(R.id.invoiceNumberInput);
         descriptionInput = findViewById(R.id.invoiceDescriptionInput);
@@ -62,7 +61,8 @@ public class MainActivity extends AppCompatActivity {
                 totalAmountInput.getText().toString().trim()
         );
 
-        /* InvoiceData invoiceData = new InvoiceData(
+        /* Dummy object for testing
+        InvoiceData invoiceData = new InvoiceData(
                 "28/02/2026",
                 "B0100000055",
                 "HONORARIOS MEDICOS CORRESPONDIENTE AL MES DE FEBRERO 2026.",
