@@ -141,8 +141,6 @@ public class MainActivity extends AppCompatActivity {
         canvas.drawRect(38, 320, 538, 332, headerFillPaint);
         canvas.drawRect(538, 320, 560, 332, headerFillPaint);
 
-        canvas.drawRect(38, 320, 560, 332, linePaint);
-
         canvas.drawText("DESCRIPCION", 255, 329, boldPaint);
         canvas.drawText("TOTAL", 510, 329, boldPaint);
 
