@@ -1,55 +1,36 @@
 package com.ctorres.invoice.model;
 
 public class InvoiceData {
-    private final String issuerName;
-    private final String issuerRnc;
-    private final String issuerAddress;
-    private final String issuerCityCountry;
-    private final String issuerPhone;
 
-    private final String ncf;
-    private final String dueDate;
+    // Dynamic values:
     private final String invoiceDate;
-    private final String rstNote;
-
-    private final String clientRnc;
-    private final String clientName;
-    private final String clientAddress;
-    private final String clientPhone;
-
+    private final String ncf;
     private final String description;
     private final String totalAmount;
 
+    // Static values:
+    private final String issuerName = "SR.CHARLES TOWER";
+    private final String issuerRnc = "223-6104948-3";
+    private final String issuerAddress = "Calle 60, No. 242, La Villa, S.D. Norte.";
+    private final String issuerCityCountry = "Santo Domingo";
+    private final String issuerPhone = "829-600-2837";
+
+    private final String dueDate = "31/12/2026";
+    private final String rstNote = "ACOGIDO AL RST.";
+
+    private final String clientRnc = "430-125442";
+    private final String clientName = "Centro de Salud SANTO MARCO";
+    private final String clientAddress = "CALLE MIGUEL DIAZ, Edif #3 - EL ALMIRANTE, Santo Domingo Este, R.D.";
+    private final String clientPhone = "809-414-7556";
+
     public InvoiceData(
-            String issuerName,
-            String issuerRnc,
-            String issuerAddress,
-            String issuerCityCountry,
-            String issuerPhone,
-            String ncf,
-            String dueDate,
             String invoiceDate,
-            String rstNote,
-            String clientRnc,
-            String clientName,
-            String clientAddress,
-            String clientPhone,
+            String ncf,
             String description,
             String totalAmount
     ) {
-        this.issuerName = issuerName;
-        this.issuerRnc = issuerRnc;
-        this.issuerAddress = issuerAddress;
-        this.issuerCityCountry = issuerCityCountry;
-        this.issuerPhone = issuerPhone;
-        this.ncf = ncf;
-        this.dueDate = dueDate;
         this.invoiceDate = invoiceDate;
-        this.rstNote = rstNote;
-        this.clientRnc = clientRnc;
-        this.clientName = clientName;
-        this.clientAddress = clientAddress;
-        this.clientPhone = clientPhone;
+        this.ncf = ncf;
         this.description = description;
         this.totalAmount = totalAmount;
     }
