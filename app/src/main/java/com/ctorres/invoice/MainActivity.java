@@ -64,14 +64,6 @@ public class MainActivity extends AppCompatActivity {
                 totalAmountInput.getText().toString().trim()
         );
 
-        /* Dummy object for testing
-        InvoiceData invoiceData = new InvoiceData(
-                "28/02/2026",
-                "B0100000055",
-                "HONORARIOS MEDICOS CORRESPONDIENTE AL MES DE FEBRERO 2026.",
-                "50,000.00"
-        );*/
-
         PdfDocument document = new PdfDocument();
 
         PdfDocument.PageInfo pageInfo =
@@ -125,26 +117,27 @@ public class MainActivity extends AppCompatActivity {
         float titleWidth = titlePaint.measureText(title);
         canvas.drawText(title, (pageInfo.getPageWidth() - titleWidth) / 2, 55, titlePaint);
 
+        // Issuer
         canvas.drawText("Nombre:", 40, 95, boldPaint);
-        canvas.drawText("SR.CHARLES TOWER", 88, 95, normalPaint);
+        canvas.drawText(invoiceData.getIssuerName(), 88, 95, normalPaint);
 
         canvas.drawText("RNC:", 40, 112, boldPaint);
-        canvas.drawText("223-6104948-3", 68, 112, normalPaint);
+        canvas.drawText(invoiceData.getIssuerRnc(), 68, 112, normalPaint);
 
         canvas.drawText("Dirección:", 40, 145, boldPaint);
-        canvas.drawText("Calle 60, No. 242, La Villa, S.D. Norte.", 88, 145, smallPaint);
+        canvas.drawText(invoiceData.getIssuerAddress(), 88, 145, smallPaint);
 
         canvas.drawText("Ciudad / País:", 40, 160, boldPaint);
-        canvas.drawText("Santo Domingo", 108, 160, smallPaint);
+        canvas.drawText(invoiceData.getIssuerCityCountry(), 108, 160, smallPaint);
 
         canvas.drawText("NCF:", 410, 160, boldPaint);
         canvas.drawText(invoiceData.getNcf(), 438, 160, boldPaint);
 
         canvas.drawText("Teléfono:", 40, 185, boldPaint);
-        canvas.drawText("829-600-2837", 83, 185, smallPaint);
+        canvas.drawText(invoiceData.getIssuerPhone(), 83, 185, smallPaint);
 
         canvas.drawText("VENCE", 410, 185, boldPaint);
-        canvas.drawText("31/12/2026", 448, 185, boldPaint);
+        canvas.drawText(invoiceData.getDueDate(), 448, 185, boldPaint);
 
         canvas.drawText("FECHA:", 40, 200, normalPaint);
         canvas.drawText(invoiceData.getInvoiceDate(), 83, 200, smallPaint);
@@ -153,23 +146,22 @@ public class MainActivity extends AppCompatActivity {
         float rstWidth = smallPaint.measureText(rst);
         canvas.drawText(rst, (pageInfo.getPageWidth() - rstWidth) / 2, 205, smallPaint);
 
-        // Cliente
+        // Client
         canvas.drawText("RNC:", 40, 230, boldPaint);
-        canvas.drawText("430-125442", 68, 230, boldPaint);
+        canvas.drawText(invoiceData.getClientRnc(), 68, 230, boldPaint);
 
         canvas.drawText("CLIENTE:", 40, 246, boldPaint);
-
-        String clientName = "Centro de Salud SANTO MARCO";
+        String clientName = invoiceData.getClientName();
         float clientWidth = boldPaint.measureText(clientName);
         canvas.drawText(clientName, (pageInfo.getPageWidth() - clientWidth) / 2, 246, boldPaint);
 
         canvas.drawText("Dirección:", 40, 272, boldPaint);
-        canvas.drawText("CALLE MIGUEL DIAZ, Edif #3 - EL ALMIRANTE, Santo Domingo Este, R.D.", 88, 272, smallPaint);
+        canvas.drawText(invoiceData.getClientAddress(), 88, 272, smallPaint);
 
         canvas.drawText("Teléfono:", 40, 287, boldPaint);
-        canvas.drawText("809-414-7556", 83, 287, smallPaint);
+        canvas.drawText(invoiceData.getClientPhone(), 83, 287, smallPaint);
 
-        // Cabecera tabla
+        // Table header
         canvas.drawRect(38, 320, 538, 332, headerFillPaint);
         canvas.drawRect(538, 320, 560, 332, headerFillPaint);
 
@@ -202,8 +194,9 @@ public class MainActivity extends AppCompatActivity {
 
         document.finishPage(page);
 
+        String invoiceFileName = "invoice_" + invoiceData.getNcf() + ".pdf";
         File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        File file = new File(downloadsDir, "invoice_test.pdf");
+        File file = new File(downloadsDir, invoiceFileName);
 
         try {
             document.writeTo(new FileOutputStream(file));
