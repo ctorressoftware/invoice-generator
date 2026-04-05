@@ -87,9 +87,6 @@ public class MainActivity extends AppCompatActivity {
         Paint softGrayPaint = new Paint();
         softGrayPaint.setColor(Color.rgb(230, 230, 230));
 
-        int left = 22;
-        int right = 573;
-
         // Título
         String title = "FACTURA";
         float titleWidth = titlePaint.measureText(title);
@@ -102,9 +99,6 @@ public class MainActivity extends AppCompatActivity {
         canvas.drawText("RNC:", 40, 112, boldPaint);
         canvas.drawText("223-6104948-3", 68, 112, normalPaint);
 
-        // Línea horizontal
-        canvas.drawLine(left, 130, right, 130, linePaint);
-
         canvas.drawText("Dirección:", 40, 145, boldPaint);
         canvas.drawText("Calle 60, No. 242, La Villa, S.D. Norte.", 88, 145, smallPaint);
 
@@ -113,8 +107,6 @@ public class MainActivity extends AppCompatActivity {
 
         canvas.drawText("NCF:", 410, 160, boldPaint);
         canvas.drawText("B0100000053", 438, 160, boldPaint);
-
-        canvas.drawLine(left, 170, right, 170, linePaint);
 
         canvas.drawText("Teléfono:", 40, 185, boldPaint);
         canvas.drawText("829-600-2837", 83, 185, smallPaint);
@@ -127,9 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
         String rst = "ACOGIDO AL RST.";
         float rstWidth = smallPaint.measureText(rst);
-        canvas.drawText(rst, (pageInfo.getPageWidth() - rstWidth) / 2, 200, smallPaint);
-
-        canvas.drawLine(left, 215, right, 215, linePaint);
+        canvas.drawText(rst, (pageInfo.getPageWidth() - rstWidth) / 2, 205, smallPaint);
 
         // Cliente
         canvas.drawText("RNC:", 40, 230, boldPaint);
@@ -140,8 +130,6 @@ public class MainActivity extends AppCompatActivity {
         String clientName = "Centro de Salud SANTO MARCO";
         float clientWidth = boldPaint.measureText(clientName);
         canvas.drawText(clientName, (pageInfo.getPageWidth() - clientWidth) / 2, 246, boldPaint);
-
-        canvas.drawLine(left, 255, right, 255, linePaint);
 
         canvas.drawText("Dirección:", 40, 272, boldPaint);
         canvas.drawText("CALLE MIGUEL DIAZ, Edif #3 - EL ALMIRANTE, Santo Domingo Este, R.D.", 88, 272, smallPaint);
@@ -159,31 +147,28 @@ public class MainActivity extends AppCompatActivity {
         canvas.drawText("TOTAL", 510, 329, boldPaint);
 
         // Primera fila
-        canvas.drawRect(38, 332, 560, 358, softYellowPaint);
-
-        canvas.drawText("HONORARIOS MEDICOS CORRESPONDIENTE AL MES DE FEBRERO 2026.", 40, 348, smallPaint);
+        canvas.drawText("HONORARIOS MEDICOS CORRESPONDIENTE AL MES DE FEBRERO 2026.", 40, 348, boldPaint);
         canvas.drawText("$", 482, 348, boldPaint);
-        canvas.drawText("50,000.00", 515, 348, smallPaint);
+        canvas.drawText("50,000.00", 515, 348, boldPaint);
 
         // Áreas vacías
-        canvas.drawRect(38, 380, 560, 438, softYellowPaint);
-        canvas.drawRect(38, 478, 560, 496, softYellowPaint);
-        canvas.drawRect(38, 516, 560, 548, softYellowPaint);
+        canvas.drawRect(38, 360, 560, 380, softYellowPaint);
+        canvas.drawRect(38, 400, 560, 450, softYellowPaint);
+        canvas.drawRect(38, 480, 560, 500, softYellowPaint);
+        canvas.drawRect(38, 516, 560, 550, softYellowPaint);
 
         // Total final
+        canvas.drawRect(478, 550, 560, 575, softBluePaint);
+        canvas.drawText("TOTAL", 438, 570, boldPaint);
+        canvas.drawText("$", 488, 570, boldPaint);
+        canvas.drawText("50,000.00", 516, 570, boldPaint);
+
+        // Gray line
         canvas.drawRect(38, 575, 560, 612, softGrayPaint);
-
-        canvas.drawText("TOTAL", 450, 592, boldPaint);
-
-        canvas.drawRect(478, 582, 505, 597, softBluePaint);
-        canvas.drawRect(505, 582, 560, 597, softBluePaint);
-
-        canvas.drawText("$", 488, 593, boldPaint);
-        canvas.drawText("50,000.00", 518, 593, smallPaint);
 
         // Firma
         canvas.drawText("Firma y sello representante:", 40, 665, smallPaint);
-        canvas.drawLine(40, 700, 118, 700, linePaint);
+        canvas.drawLine(40, 700, 130, 700, linePaint);
 
         document.finishPage(page);
 
