@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -26,6 +27,10 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private Button generateBtn;
+    private EditText invoiceDateInput;
+    private EditText invoiceNumberInput;
+    private EditText descriptionInput;
+    private EditText totalAmountInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+
+        invoiceDateInput = findViewById(R.id.invoiceDateInput);
+        invoiceNumberInput = findViewById(R.id.invoiceNumberInput);
+        descriptionInput = findViewById(R.id.invoiceDescriptionInput);
+        totalAmountInput = findViewById(R.id.invoiceTotalAmountInput);
+
         generateBtn = findViewById(R.id.generate_button);
         generateBtn.setOnClickListener(v -> generatePdf());
     }
@@ -45,11 +56,18 @@ public class MainActivity extends AppCompatActivity {
     private void generatePdf() {
 
         InvoiceData invoiceData = new InvoiceData(
+                invoiceDateInput.getText().toString().trim(),
+                invoiceNumberInput.getText().toString().trim(),
+                descriptionInput.getText().toString().trim(),
+                totalAmountInput.getText().toString().trim()
+        );
+
+        /* InvoiceData invoiceData = new InvoiceData(
                 "28/02/2026",
                 "B0100000055",
                 "HONORARIOS MEDICOS CORRESPONDIENTE AL MES DE FEBRERO 2026.",
                 "50,000.00"
-        );
+        );*/
 
         PdfDocument document = new PdfDocument();
 
@@ -156,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
         canvas.drawText("TOTAL", 510, 329, boldPaint);
 
         // Primera fila
-        canvas.drawText(invoiceData.getDescription(), 40, 348, boldPaint);
+        canvas.drawText(invoiceData.getDescription().replace("\n", " "), 40, 348, boldPaint);
         canvas.drawText("$", 482, 348, boldPaint);
         canvas.drawText(invoiceData.getTotalAmount(), 515, 348, boldPaint);
 
