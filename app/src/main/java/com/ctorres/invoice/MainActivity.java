@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -15,9 +16,13 @@ import androidx.core.view.WindowInsetsCompat;
 import android.graphics.pdf.PdfDocument;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+
+import com.ctorres.invoice.model.InvoiceData;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private Button generateBtn;
@@ -38,6 +43,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void generatePdf() {
+
+        InvoiceData invoiceData = new InvoiceData(
+                "28/02/2026",
+                "B0100000055",
+                "HONORARIOS MEDICOS CORRESPONDIENTE AL MES DE FEBRERO 2026.",
+                "50,000.00"
+        );
+
         PdfDocument document = new PdfDocument();
 
         PdfDocument.PageInfo pageInfo =
@@ -87,12 +100,10 @@ public class MainActivity extends AppCompatActivity {
         Paint softGrayPaint = new Paint();
         softGrayPaint.setColor(Color.rgb(230, 230, 230));
 
-        // Título
         String title = "FACTURA";
         float titleWidth = titlePaint.measureText(title);
         canvas.drawText(title, (pageInfo.getPageWidth() - titleWidth) / 2, 55, titlePaint);
 
-        // Bloque emisor
         canvas.drawText("Nombre:", 40, 95, boldPaint);
         canvas.drawText("SR.CHARLES TOWER", 88, 95, normalPaint);
 
@@ -106,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         canvas.drawText("Santo Domingo", 108, 160, smallPaint);
 
         canvas.drawText("NCF:", 410, 160, boldPaint);
-        canvas.drawText("B0100000053", 438, 160, boldPaint);
+        canvas.drawText(invoiceData.getNcf(), 438, 160, boldPaint);
 
         canvas.drawText("Teléfono:", 40, 185, boldPaint);
         canvas.drawText("829-600-2837", 83, 185, smallPaint);
@@ -115,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         canvas.drawText("31/12/2026", 448, 185, boldPaint);
 
         canvas.drawText("FECHA:", 40, 200, normalPaint);
-        canvas.drawText("28/02/2026", 83, 200, smallPaint);
+        canvas.drawText(invoiceData.getInvoiceDate(), 83, 200, smallPaint);
 
         String rst = "ACOGIDO AL RST.";
         float rstWidth = smallPaint.measureText(rst);
@@ -145,9 +156,9 @@ public class MainActivity extends AppCompatActivity {
         canvas.drawText("TOTAL", 510, 329, boldPaint);
 
         // Primera fila
-        canvas.drawText("HONORARIOS MEDICOS CORRESPONDIENTE AL MES DE FEBRERO 2026.", 40, 348, boldPaint);
+        canvas.drawText(invoiceData.getDescription(), 40, 348, boldPaint);
         canvas.drawText("$", 482, 348, boldPaint);
-        canvas.drawText("50,000.00", 515, 348, boldPaint);
+        canvas.drawText(invoiceData.getTotalAmount(), 515, 348, boldPaint);
 
         // Áreas vacías
         canvas.drawRect(38, 360, 560, 380, softYellowPaint);
@@ -159,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
         canvas.drawRect(478, 550, 560, 575, softBluePaint);
         canvas.drawText("TOTAL", 438, 570, boldPaint);
         canvas.drawText("$", 488, 570, boldPaint);
-        canvas.drawText("50,000.00", 516, 570, boldPaint);
+        canvas.drawText(invoiceData.getTotalAmount(), 516, 570, boldPaint);
 
         // Gray line
         canvas.drawRect(38, 575, 560, 612, softGrayPaint);
@@ -177,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
             document.writeTo(new FileOutputStream(file));
             Toast.makeText(this, "PDF generado: " + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.println(Log.ERROR, "Error", Objects.requireNonNull(e.getMessage()));
             Toast.makeText(this, "Error al generar PDF", Toast.LENGTH_SHORT).show();
         }
 
