@@ -16,7 +16,6 @@ public class InvoiceData {
     private final String issuerPhone = "829-600-2837";
 
     private final String dueDate = "31/12/2026";
-    private final String rstNote = "ACOGIDO AL RST.";
 
     private final String clientRnc = "430-125442";
     private final String clientName = "Centro de Salud SANTO MARCO";
@@ -65,10 +64,6 @@ public class InvoiceData {
 
     public String getInvoiceDate() {
         return invoiceDate;
-    }
-
-    public String getRstNote() {
-        return rstNote;
     }
 
     public String getClientRnc() {
